@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<title>NOCKANDA EXAMPLE</title>
+<title>MP503대기실 감지센서</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 </head>
@@ -10,16 +10,16 @@
 
 <div style="position:relative;width:160px; height:160px;">
 	<canvas id="myChart"></canvas>
-	<div id="cap" style="position:absolute;top:70px;left:0px;text-align:center;width:100%;font-size:20px;font-family:Arial, sans-serif;">
+	<div id="cap" style="position:absolute;top:110px;left:0px;text-align:center;width:100%;font-size:40px;font-family:Arial, sans-serif;">
 	-
 	</div>
 </div>
 
 
 <script>
-var input_value = 10;
-var max_value = 1000;
-var num = input_value/max_value; 
+var input_value = 10; // 초기값 (센서 데이터 초기값, 예: 10 ppb)
+var max_value = 1000; // 최대값 (센서가 측정 가능한 최대 농도, 예: 2000 ppb)
+var num = input_value / max_value; // 비율 계산
 var color = 'blue';
 var data = { labels: [input_value ], datasets: [ { data: [num, 1-num], backgroundColor: [color], hoverBackgroundColor: [ color ] }] }; 
 var ctx = document.getElementById('myChart').getContext('2d');
@@ -40,11 +40,11 @@ newval   = recv/max_value;
 chart.data.datasets[0].data[0] = newval;
 chart.data.datasets[0].data[1] = 1-newval;
 chart.data.labels[0] = recv;
-document.getElementById("cap").innerHTML = recv + "ppm";
+document.getElementById("cap").innerHTML = recv + "ppb";
 chart.update();
 }
 
 </script>
-<input type="button" value="테슷흐버튼" onclick="nockanda_forever();">
+<!-- <input type="button" value="테슷흐버튼" onclick="nockanda_forever();"> --!>
 </body>
 </html>
