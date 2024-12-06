@@ -11,14 +11,14 @@
 <div style="position:relative;width:160px; height:160px;">
 	<canvas id="myChart"></canvas>
 	<div id="cap" style="position:absolute;top:70px;left:0px;text-align:center;width:100%;font-size:20px;font-family:Arial, sans-serif;">
-	-
+	ug/m3
 	</div>
 </div>
 
 
 <script>
 var input_value = 0;
-var max_value = 1023;
+var max_value = 1000;
 var num = input_value/max_value; 
 var color = 'blue';
 var data = { labels: [input_value ], datasets: [ { data: [num, 1-num], backgroundColor: [color], hoverBackgroundColor: [ color ] }] }; 
