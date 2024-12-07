@@ -10,10 +10,10 @@
 <div style="position:relative;width:160px; height:160px;">
 	<canvas id="myChart"></canvas>
 	<div id="cap" style="position:absolute;top:70px;left:0px;text-align:center;width:100%;font-size:20px;font-family:Arial, sans-serif;">
-	ug/m3
+	%
 	</div>
-	<div id="status" style="position:absolute;top:160px;left:0px;text-align:center;width:100%;font-size:16px;font-family:Arial, sans-serif;font-weight:bold;">
-	    상태: -
+	<div id="status" style="position:absolute;top:100px;left:0px;text-align:center;width:100%;font-size:16px;font-family:Arial, sans-serif;font-weight:bold;">
+	    
 	</div>
 </div>
 
@@ -68,7 +68,7 @@ function getColor(value) {
 
 // 상태 업데이트 함수
 function updateStatus(status) {
-    document.getElementById("status").innerHTML = "상태: " + status;
+    document.getElementById("status").innerHTML =  status;
 }
 
 function nockanda_forever() {
