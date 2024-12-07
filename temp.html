@@ -7,12 +7,12 @@
 </head>
 <body>
 
-<div style="position:relative;width:250px; height:250px;">
+<div style="position:relative;width:160px; height:160px;">
 	<canvas id="myChart"></canvas>
-	<div id="cap" style="position:absolute;top:120px;left:0px;text-align:center;width:100%;font-size:40px;font-family:Arial, sans-serif;">
-	%
+	<div id="cap" style="position:absolute;top:70px;left:0px;text-align:center;width:100%;font-size:20px;font-family:Arial, sans-serif;">
+	-'C
 	</div>
-	<div id="status" style="position:absolute;top:180px;left:0px;text-align:center;width:100%;font-size:30px;font-family:Arial, sans-serif;font-weight:bold;">
+	<div id="status" style="position:absolute;top:100px;left:0px;text-align:center;width:100%;font-size:16px;font-family:Arial, sans-serif;font-weight:bold;">
 	    
 	</div>
 </div>
@@ -21,8 +21,9 @@
 
 <script>
 var input_value = 0;
-var max_value = 100;
-var num = input_value / max_value;
+var min_value = -20;
+var max_value = 60;
+var num = (input_value-min_value)/(max_value-min_value); 
 
 // 초기 색상 설정
 var color = getColor(input_value);
@@ -53,10 +54,10 @@ var chart = new Chart(ctx, {
 function getColor(value) {
    if (value < 1) {
         updateStatus(" ... ");
-   } else if (value < 40) {
+   } else if (value < 25) {
         updateStatus("좋음");
         return 'blue';
-    } else if (value < 70) {
+    } else if (value < 36) {
         updateStatus("보통");
         return 'yellow';
     } else {
@@ -86,7 +87,7 @@ function nockanda_forever() {
     chart.data.labels[0] = recv;
 
     // 캡션 업데이트
-    document.getElementById("cap").innerHTML = recv + "%";
+    document.getElementById("cap").innerHTML = recv + "C";
 
     // 차트 업데이트
     chart.update();
