@@ -1,42 +1,62 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <title>NOCKANDA EXAMPLE</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-
+<style>
+  /* 캔버스를 크게 만들기 위한 스타일 */
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 화면 전체 높이를 사용 */
+    background-color: #f4f4f4;
+  }
+  canvas {
+    max-width: 90%;
+    max-height: 90%;
+  }
+</style>
 </head>
 <body>
-<div style="width:400px;">
-<canvas id="line1"></canvas>
+<div style="width:90%; height:90%;">
+  <canvas id="line1"></canvas>
 </div>
-
 
 <script>
 var ctx = document.getElementById('line1').getContext('2d');
 var chart = new Chart(ctx, {
 	type: 'line',
 	data: {
-		labels: ['T-1', 'T-2', 'T-3', 'T-4', 'T-5', 'T-6', 'T-7','T-8', 'T-9', 'T-10'],
+		labels: ['T-1', 'T-2', 'T-3', 'T-4', 'T-5', 'T-6', 'T-7', 'T-8', 'T-9', 'T-10'],
 		datasets: [
-				{
-					label: 'Co2',
-					backgroundColor: 'transparent',
-					borderColor: "red",
-					data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-				}
-
+			{
+				label: 'Co2',
+				backgroundColor: 'transparent',
+				borderColor: "red",
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				borderWidth: 2
+			}
 		]
 	},
-	options: {}
+	options: {
+		responsive: true, /* 캔버스 크기를 부모 요소에 맞춤 */
+		maintainAspectRatio: false, /* 비율을 고정하지 않음 */
+		scales: {
+			y: {
+				beginAtZero: true /* y축이 0에서 시작하도록 설정 */
+			}
+		}
+	}
 });
 
-function nockanda_forever(){
-	var recv  = window.AppInventor.getWebViewString();	
-	chart.data.datasets.data.shift();
-	chart.data.datasets.data.push();
-	//chart.data.labels.shift();
-	chart.update();
+function nockanda_forever() {
+	var recv = window.AppInventor.getWebViewString();	
+	chart.data.datasets[0].data.shift(); // 가장 오래된 데이터를 제거
+	chart.data.datasets[0].data.push(parseFloat(recv)); // 새로운 데이터를 추가
+	chart.update(); // 차트를 업데이트
 }
 </script>
 </body>
