@@ -38,9 +38,21 @@ function nockanda_forever(){
 var recv  = window.AppInventor.getWebViewString();
 //var recv  = 90;
 newval   = (recv-min_value)/(max_value-min_value); 
+    // newval 값에 따라 색상 결정
+var color;
+if (newval <50) {
+  color = 'blue'; // 낮은 값일 때 파란색
+} else if (newval < 160) {
+  color = 'yellow'; // 중간 값일 때 노란색
+} else {
+  color = 'red'; // 높은 값일 때 빨간색
+}
+	
 chart.data.datasets[0].data[0] = newval;
 chart.data.datasets[0].data[1] = 1-newval;
 chart.data.labels[0] = recv;
+chart.data.datasets[0].backgroundColor = [color]; // 배경색 변경
+chart.data.datasets[0].hoverBackgroundColor = [color]; // 호버 색상 변경	
 document.getElementById("cap").innerHTML = recv + "PPM";
 chart.update();
 }
