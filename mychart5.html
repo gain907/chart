@@ -12,15 +12,14 @@
 	<div id="cap" style="position:absolute;top:70px;left:0px;text-align:center;width:100%;font-size:20px;font-family:Arial, sans-serif;">
 	ppm
 	</div>
-	<div id="status" style="position:absolute;top:160px;left:0px;text-align:center;width:100%;font-size:16px;font-family:Arial, sans-serif;font-weight:bold;">
-	    상태: -
+	<div id="status" style="position:absolute;top:100px;left:0px;text-align:center;width:100%;font-size:16px;font-family:Arial, sans-serif;font-weight:bold;">
+	    
 	</div>
 </div>
 
 
 
 <script>
-
 var input_value = 0;
 var max_value = 100;
 var num = input_value / max_value;
@@ -52,19 +51,23 @@ var chart = new Chart(ctx, {
 
 // 색상 변경 함수
 function getColor(value) {
-    if (value < 30) {
+   if (value < 1) {
+        updateStatus(" ... ");
+   } else if (value < 30) {
+        updateStatus("좋음");
         return 'blue';
     } else if (value < 60) {
+        updateStatus("보통");
         return 'yellow';
     } else {
+        updateStatus("나쁨");
         return 'red';
     }
 }
 
-
 // 상태 업데이트 함수
 function updateStatus(status) {
-    document.getElementById("status").innerHTML = "상태: " + status;
+    document.getElementById("status").innerHTML =  status;
 }
 
 function nockanda_forever() {
