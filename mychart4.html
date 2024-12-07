@@ -12,16 +12,20 @@
 	<div id="cap" style="position:absolute;top:70px;left:0px;text-align:center;width:100%;font-size:20px;font-family:Arial, sans-serif;">
 	ug/m3
 	</div>
+	<div id="status" style="position:absolute;top:160px;left:0px;text-align:center;width:100%;font-size:16px;font-family:Arial, sans-serif;font-weight:bold;">
+	    상태: -
+	</div>
 </div>
+
+
 
 <script>
 var input_value = 0;
-//var max_value = 1000;
 var max_value = 100;
 var num = input_value / max_value;
 
 // 초기 색상 설정
-var color = getColor(num);
+var color = getColor(input_value);
 
 var data = { 
     labels: [input_value], 
@@ -47,22 +51,32 @@ var chart = new Chart(ctx, {
 
 // 색상 변경 함수
 function getColor(value) {
-    if (value <40) {
+   if (value < 1) {
+        updateStatus(" ... ");
+   } else if (value < 40) {
+        updateStatus("좋음");
         return 'blue';
     } else if (value < 70) {
+        updateStatus("보통");
         return 'yellow';
     } else {
+        updateStatus("나쁨");
         return 'red';
     }
 }
 
+// 상태 업데이트 함수
+function updateStatus(status) {
+    document.getElementById("status").innerHTML = "상태: " + status;
+}
+
 function nockanda_forever() {
     var recv = window.AppInventor.getWebViewString();
-    // var recv = 800; // 디버그용 테스트 값
+    //var recv = 90; // 디버그용 테스트 값
     newval = recv / max_value;
 
-    // 새 색상 계산
-    var newColor = getColor(newval);
+    // 새 색상 계산 (recv를 기준으로 상태 판별)
+    var newColor = getColor(recv);
 
     // 차트 데이터 및 색상 업데이트
     chart.data.datasets[0].data[0] = newval;
@@ -78,5 +92,6 @@ function nockanda_forever() {
     chart.update();
 }
 </script>
+<!-- <input type="button" value="테스트" onclick="nockanda_forever();"> -->
 </body>
 </html>
