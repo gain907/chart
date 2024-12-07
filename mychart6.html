@@ -18,7 +18,8 @@
 
 <script>
 var input_value = 10; // 초기값 (센서 데이터 초기값, 예: 10 ppb)
-var max_value = 2000; // 최대값 (센서가 측정 가능한 최대 농도, 예: 2000 ppb)
+//var max_value = 2000; // 최대값 (센서가 측정 가능한 최대 농도, 예: 2000 ppb)
+var max_value = 100; // 최대값 (센서가 측정 가능한 최대 농도, 예: 2000 ppb)
 var num = input_value / max_value; // 비율 계산
 var color = 'blue';
 var data = { labels: [input_value ], datasets: [ { data: [num, 1-num], backgroundColor: [color], hoverBackgroundColor: [ color ] }] }; 
