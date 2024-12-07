@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>NOCKANDA EXAMPLE</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+</head>
+<body>
+
+<div style="position:relative;width:300px; height:300px;">
+	<canvas id="myChart"></canvas>
+	<div id="cap" style="position:absolute;top:120px;left:0px;text-align:center;width:100%;font-size:40px;font-family:Arial, sans-serif;">
+	ppb
+	</div>
+	<div id="status" style="position:absolute;top:180px;left:0px;text-align:center;width:100%;font-size:30px;font-family:Arial, sans-serif;font-weight:bold;">
+	    
+	</div>
+</div>
+
+
+
+<script>
+var input_value = 0;
+var max_value = 200;
+var num = input_value / max_value;
+
+// 초기 색상 설정
+var color = getColor(input_value);
+
+var data = { 
+    labels: [input_value], 
+    datasets: [{ 
+        data: [num, 1 - num], 
+        backgroundColor: [color], 
+        hoverBackgroundColor: [color] 
+    }] 
+}; 
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: { 
+        responsive: true, 
+        legend: { display: false }, 
+        elements: { center: { text: Math.round(num * 100), fontStyle: 'Helvetica', sidePadding: 15 } }, 
+        maintainAspectRatio: false, 
+        cutoutPercentage: 70 
+    } 
+});
+
+// 색상 변경 함수
+function getColor(value) {
+   if (value < 1) {
+        updateStatus(" ... ");
+   } else if (value < 80) {
+        updateStatus("좋음");
+        return 'blue';
+    } else if (value < 160) {
+        updateStatus("보통");
+        return 'yellow';
+    } else {
+        updateStatus("나쁨");
+        return 'red';
+    }
+}
+
+// 상태 업데이트 함수
+function updateStatus(status) {
+    document.getElementById("status").innerHTML =  status;
+}
+
+function nockanda_forever() {
+    var recv = window.AppInventor.getWebViewString();
+    //var recv = 90; // 디버그용 테스트 값
+    newval = recv / max_value;
+
+    // 새 색상 계산 (recv를 기준으로 상태 판별)
+    var newColor = getColor(recv);
+
+    // 차트 데이터 및 색상 업데이트
+    chart.data.datasets[0].data[0] = newval;
+    chart.data.datasets[0].data[1] = 1 - newval;
+    chart.data.datasets[0].backgroundColor[0] = newColor;
+    chart.data.datasets[0].hoverBackgroundColor[0] = newColor;
+    chart.data.labels[0] = recv;
+
+    // 캡션 업데이트
+    document.getElementById("cap").innerHTML = recv + "ppm";
+
+    // 차트 업데이트
+    chart.update();
+}
+</script>
+<!-- <input type="button" value="테슷흐버튼" onclick="nockanda_forever();"> -->
+</body>
+</html>
